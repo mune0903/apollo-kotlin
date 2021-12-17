@@ -1,21 +1,10 @@
-query GetNode {
-  node {
-    ...BookFragment
+query GetBook {
+  ...queryFragment
+}
+
+fragment queryFragment on Query {
+  book {
+    isbn
   }
 }
 
-fragment BookFragment on Book {
-  id
-  isbn
-  author {
-    ...AuthorFragment
-  }
-}
-
-fragment AuthorFragment on Author {
-  id
-  name
-  node2 {
-    id
-  }
-}

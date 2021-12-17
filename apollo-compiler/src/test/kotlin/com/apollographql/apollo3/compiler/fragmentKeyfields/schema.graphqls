@@ -1,28 +1,10 @@
 type Query {
-  node: Node
+  book: Book
 }
 
-interface Node @typePolicy(keyFields: "id") {
-  id: String!
-}
-
-type Book implements Node @typePolicy(keyFields: "isbn") {
+type Book @typePolicy(keyFields: "isbn") {
   id: String!
   isbn: String!
-  author: Author!
+  title: String!
 }
 
-type Author {
-  id: String!
-  name: String!
-  node2: Node2!
-}
-
-interface Node2 @typePolicy(keyFields: "id") {
-  id: String!
-}
-
-type Locale implements Node2 @typePolicy(keyFields: "country") {
-  id: String!
-  country: String!
-}

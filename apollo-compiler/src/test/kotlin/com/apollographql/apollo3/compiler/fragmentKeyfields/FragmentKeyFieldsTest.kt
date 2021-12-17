@@ -26,27 +26,15 @@ class FragmentKeyFieldsTest {
         .definitions
     val operation = definitions.filterIsInstance<GQLOperationDefinition>()
         .first()
-        .let {
-          addRequiredFields(it, schema)
-        }
 
-    val fragments = definitions.filterIsInstance<GQLFragmentDefinition>().map {
-      addRequiredFields(it, schema)
-    }
+    val fragments = definitions.filterIsInstance<GQLFragmentDefinition>()
 
-    try {
-      checkKeyFields(operation, schema, fragments.associateBy { it.name })
-    } catch (e: Exception) {
-      e.message
-      fail("no exception was expected")
-    }
-
-    try {
-      checkKeyFields(fragments.first { it.name == "AuthorFragment" }, schema, fragments.associateBy { it.name })
-      fail("an exception was expected")
-    } catch (e: Exception) {
-      e.message
-      assert(e.message?.contains("are not queried") == true)
-    }
+    /**
+     * throws with:
+     * Key Field(s) '[isbn]' are not queried on Book at Operation(GetBook).book
+     *
+     *
+     */
+   checkKeyFields(operation, schema, fragments.associateBy { it.name })
   }
 }
