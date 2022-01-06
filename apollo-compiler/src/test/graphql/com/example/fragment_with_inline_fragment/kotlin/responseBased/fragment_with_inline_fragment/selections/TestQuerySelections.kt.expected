@@ -19,10 +19,6 @@ import kotlin.collections.List
 public object TestQuerySelections {
   private val hero: List<CompiledSelection> = listOf(
         CompiledField.Builder(
-          name = "__typename",
-          type = CompiledStringType.notNull()
-        ).build(),
-        CompiledField.Builder(
           name = "name",
           type = CompiledStringType.notNull()
         ).build(),

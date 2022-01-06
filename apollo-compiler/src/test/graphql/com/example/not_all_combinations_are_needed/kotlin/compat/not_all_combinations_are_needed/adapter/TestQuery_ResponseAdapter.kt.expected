@@ -164,16 +164,12 @@ public object TestQuery_ResponseAdapter {
         }
       }
 
-      check(__typename != null) {
-        "__typename was not found"
-      }
-
       reader.rewind()
       val fragments = com.example.not_all_combinations_are_needed.adapter.TestQuery_ResponseAdapter.AsB.Fragments.fromJson(reader,
           customScalarAdapters)
 
       return TestQuery.AsB(
-        __typename = __typename,
+        __typename = __typename!!,
         fieldA1 = fieldA1,
         fragments = fragments
       )
@@ -206,10 +202,6 @@ public object TestQuery_ResponseAdapter {
             0 -> __typename = StringAdapter.fromJson(reader, customScalarAdapters)
             else -> break
           }
-        }
-
-        check(__typename != null) {
-          "__typename was not found"
         }
 
         reader.rewind()

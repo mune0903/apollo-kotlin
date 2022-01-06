@@ -62,16 +62,12 @@ public object AFragmentImpl_ResponseAdapter {
         }
       }
 
-      check(__typename != null) {
-        "__typename was not found"
-      }
-
       reader.rewind()
       val fragments = com.example.multiple_fragments.fragment.AFragmentImpl_ResponseAdapter.Node.Fragments.fromJson(reader,
           customScalarAdapters)
 
       return com.example.multiple_fragments.fragment.AFragment.Node(
-        __typename = __typename,
+        __typename = __typename!!,
         fragments = fragments
       )
     }

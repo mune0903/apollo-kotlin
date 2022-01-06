@@ -146,21 +146,17 @@ public object TestQuery_ResponseAdapter {
         }
 
         private object OnB : Adapter<TestQuery.Data.Root.OnA.OnB> {
-          public val RESPONSE_NAMES: List<String> = listOf("__typename")
+          public val RESPONSE_NAMES: List<String> = listOf()
 
           public override fun fromJson(reader: JsonReader,
               customScalarAdapters: CustomScalarAdapters): TestQuery.Data.Root.OnA.OnB {
-            var __typename: String? = null
+
 
             while(true) {
               when (reader.selectName(RESPONSE_NAMES)) {
-                0 -> __typename = StringAdapter.fromJson(reader, customScalarAdapters)
+
                 else -> break
               }
-            }
-
-            check(__typename != null) {
-              "__typename was not found"
             }
 
             reader.rewind()
@@ -168,7 +164,6 @@ public object TestQuery_ResponseAdapter {
                 customScalarAdapters)
 
             return TestQuery.Data.Root.OnA.OnB(
-              __typename = __typename,
               bFragment = bFragment
             )
           }
@@ -178,9 +173,6 @@ public object TestQuery_ResponseAdapter {
             customScalarAdapters: CustomScalarAdapters,
             `value`: TestQuery.Data.Root.OnA.OnB
           ): Unit {
-            writer.name("__typename")
-            StringAdapter.toJson(writer, customScalarAdapters, value.__typename)
-
             com.example.not_all_combinations_are_needed.fragment.BFragmentImpl_ResponseAdapter.BFragment.toJson(writer,
                 customScalarAdapters, value.bFragment)
           }

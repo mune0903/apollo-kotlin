@@ -49,8 +49,6 @@ public class TestQuery() : Query<TestQuery.Data> {
         public fun C.asA() = this as? AC
 
         public fun C.asAB() = this as? ABC
-
-        public fun C.asB() = this as? BC
       }
     }
 
@@ -60,19 +58,11 @@ public class TestQuery() : Query<TestQuery.Data> {
       public val fieldA1: String?
     }
 
-    public sealed interface BC : C {
-      public override val __typename: String
-
-      public val fieldB2: String?
-    }
-
     public data class ABC(
       public override val __typename: String,
       public override val fieldA1: String?,
-      public val fieldB1: String?,
-      public override val fieldB2: String?,
-      public val fieldA2: String?
-    ) : AC, BC
+      public val fieldB1: String?
+    ) : AC
 
     public data class OtherC(
       public override val __typename: String
@@ -82,16 +72,11 @@ public class TestQuery() : Query<TestQuery.Data> {
       public override val __typename: String,
       public override val fieldA1: String?
     ) : AC
-
-    public data class OtherBC(
-      public override val __typename: String,
-      public override val fieldB2: String?
-    ) : BC
   }
 
   public companion object {
     public const val OPERATION_ID: String =
-        "6faa0db26a1466e969ffc48d42fef45419406628c6c607fbbb1a0da1d592fdb2"
+        "fcf97ed0a84cba61041468e099af495a8b9e37187f8fd35b9ddfd486c375fb0b"
 
     /**
      * The minimized GraphQL document being sent to the server to save a few bytes.
@@ -107,18 +92,11 @@ public class TestQuery() : Query<TestQuery.Data> {
      *         fieldB1
      *       }
      *     }
-     *     ... on B {
-     *       __typename
-     *       fieldB2
-     *       ... on A {
-     *         fieldA2
-     *       }
-     *     }
      *   }
      * }
      */
     public const val OPERATION_DOCUMENT: String =
-        "query TestQuery { c { __typename ... on A { __typename fieldA1 ... on B { fieldB1 } } ... on B { __typename fieldB2 ... on A { fieldA2 } } } }"
+        "query TestQuery { c { __typename ... on A { __typename fieldA1 ... on B { fieldB1 } } } }"
 
     public const val OPERATION_NAME: String = "TestQuery"
   }

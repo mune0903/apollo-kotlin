@@ -7,8 +7,6 @@ package com.example.simple_fragment_with_inline_fragments.selections;
 
 import com.apollographql.apollo3.api.CompiledField;
 import com.apollographql.apollo3.api.CompiledFragment;
-import com.apollographql.apollo3.api.CompiledGraphQL;
-import com.apollographql.apollo3.api.CompiledNotNullType;
 import com.apollographql.apollo3.api.CompiledSelection;
 import com.example.simple_fragment_with_inline_fragments.fragment.selections.HeroDetailsSelections;
 import com.example.simple_fragment_with_inline_fragments.type.Character;
@@ -17,7 +15,6 @@ import java.util.List;
 
 public class TestQuerySelections {
   private static List<CompiledSelection> hero = Arrays.asList(
-    new CompiledField.Builder("__typename", new CompiledNotNullType(CompiledGraphQL.CompiledStringType)).build(),
     new CompiledFragment.Builder("Character", Arrays.asList("Droid", "Human")).selections(HeroDetailsSelections.root).build()
   );
 

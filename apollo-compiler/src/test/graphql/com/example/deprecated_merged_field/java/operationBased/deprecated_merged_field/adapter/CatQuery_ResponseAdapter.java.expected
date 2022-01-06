@@ -6,12 +6,6 @@
 package com.example.deprecated_merged_field.adapter;
 
 import com.apollographql.apollo3.api.Adapter;
-import com.apollographql.apollo3.api.Adapters;
-import com.apollographql.apollo3.api.Assertions;
-import com.apollographql.apollo3.api.BPossibleTypes;
-import com.apollographql.apollo3.api.BTerm;
-import com.apollographql.apollo3.api.BooleanExpression;
-import com.apollographql.apollo3.api.BooleanExpressions;
 import com.apollographql.apollo3.api.CustomScalarAdapters;
 import com.apollographql.apollo3.api.NullableAdapter;
 import com.apollographql.apollo3.api.ObjectAdapter;
@@ -61,30 +55,25 @@ public class CatQuery_ResponseAdapter {
   public enum Cat implements Adapter<CatQuery.Cat> {
     INSTANCE;
 
-    private static final List<String> RESPONSE_NAMES = Arrays.asList("__typename");
+    private static final List<String> RESPONSE_NAMES = Collections.emptyList();
 
     @Override
     public CatQuery.Cat fromJson(JsonReader reader, CustomScalarAdapters customScalarAdapters)
         throws IOException {
-      String __typename = null;
+
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: __typename = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
+
           default: break loop;
         }
       }
 
-      Assertions.checkFieldNotMissing(__typename, "__typename");
       reader.rewind();
-      AnimalFragment animalFragment = null;
-      if (BooleanExpressions.evaluate(new BooleanExpression.Element<BTerm>(new BPossibleTypes("Cat","Dog")), Collections.emptySet(), __typename)) {
-        animalFragment = com.example.deprecated_merged_field.fragment.AnimalFragmentImpl_ResponseAdapter.AnimalFragment.INSTANCE.fromJson(reader, customScalarAdapters);
-      }
+      AnimalFragment animalFragment = com.example.deprecated_merged_field.fragment.AnimalFragmentImpl_ResponseAdapter.AnimalFragment.INSTANCE.fromJson(reader, customScalarAdapters);
 
       return new CatQuery.Cat(
-        __typename,
         animalFragment
       );
     }
@@ -92,12 +81,7 @@ public class CatQuery_ResponseAdapter {
     @Override
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         CatQuery.Cat value) throws IOException {
-      writer.name("__typename");
-      Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.__typename);
-
-      if (value.animalFragment != null) {
-        com.example.deprecated_merged_field.fragment.AnimalFragmentImpl_ResponseAdapter.AnimalFragment.INSTANCE.toJson(writer, customScalarAdapters, value.animalFragment);
-      }
+      com.example.deprecated_merged_field.fragment.AnimalFragmentImpl_ResponseAdapter.AnimalFragment.INSTANCE.toJson(writer, customScalarAdapters, value.animalFragment);
     }
   }
 }

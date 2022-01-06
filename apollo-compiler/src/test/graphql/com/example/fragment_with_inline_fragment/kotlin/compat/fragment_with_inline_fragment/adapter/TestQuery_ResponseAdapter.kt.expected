@@ -51,26 +51,20 @@ public object TestQuery_ResponseAdapter {
   }
 
   public object Hero : Adapter<TestQuery.Hero> {
-    public val RESPONSE_NAMES: List<String> = listOf("__typename", "name", "appearsIn")
+    public val RESPONSE_NAMES: List<String> = listOf("name", "appearsIn")
 
     public override fun fromJson(reader: JsonReader, customScalarAdapters: CustomScalarAdapters):
         TestQuery.Hero {
-      var __typename: String? = null
       var name: String? = null
       var appearsIn: List<Episode?>? = null
 
       while(true) {
         when (reader.selectName(RESPONSE_NAMES)) {
-          0 -> __typename = StringAdapter.fromJson(reader, customScalarAdapters)
-          1 -> name = StringAdapter.fromJson(reader, customScalarAdapters)
-          2 -> appearsIn = Episode_ResponseAdapter.nullable().list().fromJson(reader,
+          0 -> name = StringAdapter.fromJson(reader, customScalarAdapters)
+          1 -> appearsIn = Episode_ResponseAdapter.nullable().list().fromJson(reader,
               customScalarAdapters)
           else -> break
         }
-      }
-
-      check(__typename != null) {
-        "__typename was not found"
       }
 
       reader.rewind()
@@ -78,7 +72,6 @@ public object TestQuery_ResponseAdapter {
           customScalarAdapters)
 
       return TestQuery.Hero(
-        __typename = __typename,
         name = name!!,
         appearsIn = appearsIn!!,
         fragments = fragments
@@ -90,9 +83,6 @@ public object TestQuery_ResponseAdapter {
       customScalarAdapters: CustomScalarAdapters,
       `value`: TestQuery.Hero
     ): Unit {
-      writer.name("__typename")
-      StringAdapter.toJson(writer, customScalarAdapters, value.__typename)
-
       writer.name("name")
       StringAdapter.toJson(writer, customScalarAdapters, value.name)
 
@@ -116,10 +106,6 @@ public object TestQuery_ResponseAdapter {
             0 -> __typename = StringAdapter.fromJson(reader, customScalarAdapters)
             else -> break
           }
-        }
-
-        check(__typename != null) {
-          "__typename was not found"
         }
 
         reader.rewind()

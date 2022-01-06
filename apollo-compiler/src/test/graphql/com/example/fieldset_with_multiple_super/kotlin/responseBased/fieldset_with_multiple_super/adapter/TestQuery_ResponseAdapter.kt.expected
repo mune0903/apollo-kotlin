@@ -63,8 +63,6 @@ public object TestQuery_ResponseAdapter {
           -> ABC.fromJson(reader, customScalarAdapters, __typename)
           "AC",
           -> OtherAC.fromJson(reader, customScalarAdapters, __typename)
-          "BC",
-          -> OtherBC.fromJson(reader, customScalarAdapters, __typename)
           else
           -> OtherC.fromJson(reader, customScalarAdapters, __typename)
         }
@@ -78,15 +76,13 @@ public object TestQuery_ResponseAdapter {
         when(value) {
           is TestQuery.Data.ABC -> ABC.toJson(writer, customScalarAdapters, value)
           is TestQuery.Data.OtherAC -> OtherAC.toJson(writer, customScalarAdapters, value)
-          is TestQuery.Data.OtherBC -> OtherBC.toJson(writer, customScalarAdapters, value)
           is TestQuery.Data.OtherC -> OtherC.toJson(writer, customScalarAdapters, value)
         }
       }
     }
 
     public object ABC {
-      public val RESPONSE_NAMES: List<String> = listOf("__typename", "fieldA1", "fieldB1",
-          "fieldB2", "fieldA2")
+      public val RESPONSE_NAMES: List<String> = listOf("__typename", "fieldA1", "fieldB1")
 
       public fun fromJson(
         reader: JsonReader,
@@ -96,16 +92,12 @@ public object TestQuery_ResponseAdapter {
         var __typename: String? = typename
         var fieldA1: String? = null
         var fieldB1: String? = null
-        var fieldB2: String? = null
-        var fieldA2: String? = null
 
         while(true) {
           when (reader.selectName(RESPONSE_NAMES)) {
             0 -> __typename = StringAdapter.fromJson(reader, customScalarAdapters)
             1 -> fieldA1 = NullableStringAdapter.fromJson(reader, customScalarAdapters)
             2 -> fieldB1 = NullableStringAdapter.fromJson(reader, customScalarAdapters)
-            3 -> fieldB2 = NullableStringAdapter.fromJson(reader, customScalarAdapters)
-            4 -> fieldA2 = NullableStringAdapter.fromJson(reader, customScalarAdapters)
             else -> break
           }
         }
@@ -113,9 +105,7 @@ public object TestQuery_ResponseAdapter {
         return TestQuery.Data.ABC(
           __typename = __typename!!,
           fieldA1 = fieldA1,
-          fieldB1 = fieldB1,
-          fieldB2 = fieldB2,
-          fieldA2 = fieldA2
+          fieldB1 = fieldB1
         )
       }
 
@@ -132,12 +122,6 @@ public object TestQuery_ResponseAdapter {
 
         writer.name("fieldB1")
         NullableStringAdapter.toJson(writer, customScalarAdapters, value.fieldB1)
-
-        writer.name("fieldB2")
-        NullableStringAdapter.toJson(writer, customScalarAdapters, value.fieldB2)
-
-        writer.name("fieldA2")
-        NullableStringAdapter.toJson(writer, customScalarAdapters, value.fieldA2)
       }
     }
 
@@ -208,44 +192,6 @@ public object TestQuery_ResponseAdapter {
 
         writer.name("fieldA1")
         NullableStringAdapter.toJson(writer, customScalarAdapters, value.fieldA1)
-      }
-    }
-
-    public object OtherBC {
-      public val RESPONSE_NAMES: List<String> = listOf("__typename", "fieldB2")
-
-      public fun fromJson(
-        reader: JsonReader,
-        customScalarAdapters: CustomScalarAdapters,
-        typename: String
-      ): TestQuery.Data.OtherBC {
-        var __typename: String? = typename
-        var fieldB2: String? = null
-
-        while(true) {
-          when (reader.selectName(RESPONSE_NAMES)) {
-            0 -> __typename = StringAdapter.fromJson(reader, customScalarAdapters)
-            1 -> fieldB2 = NullableStringAdapter.fromJson(reader, customScalarAdapters)
-            else -> break
-          }
-        }
-
-        return TestQuery.Data.OtherBC(
-          __typename = __typename!!,
-          fieldB2 = fieldB2
-        )
-      }
-
-      public fun toJson(
-        writer: JsonWriter,
-        customScalarAdapters: CustomScalarAdapters,
-        `value`: TestQuery.Data.OtherBC
-      ): Unit {
-        writer.name("__typename")
-        StringAdapter.toJson(writer, customScalarAdapters, value.__typename)
-
-        writer.name("fieldB2")
-        NullableStringAdapter.toJson(writer, customScalarAdapters, value.fieldB2)
       }
     }
   }

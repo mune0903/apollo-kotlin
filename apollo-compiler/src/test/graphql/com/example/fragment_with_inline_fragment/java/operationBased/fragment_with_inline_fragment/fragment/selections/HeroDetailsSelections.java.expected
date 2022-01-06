@@ -19,7 +19,6 @@ import java.util.List;
 
 public class HeroDetailsSelections {
   private static List<CompiledSelection> onDroid = Arrays.asList(
-    new CompiledField.Builder("__typename", new CompiledNotNullType(CompiledGraphQL.CompiledStringType)).build(),
     new CompiledFragment.Builder("Droid", Arrays.asList("Droid")).selections(DroidDetailsSelections.root).build()
   );
 

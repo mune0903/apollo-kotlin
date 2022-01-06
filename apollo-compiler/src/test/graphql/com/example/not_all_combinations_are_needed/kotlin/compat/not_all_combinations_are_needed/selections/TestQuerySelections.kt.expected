@@ -16,10 +16,6 @@ import kotlin.collections.List
 
 public object TestQuerySelections {
   private val onB: List<CompiledSelection> = listOf(
-        CompiledField.Builder(
-          name = "__typename",
-          type = CompiledStringType.notNull()
-        ).build(),
         CompiledFragment.Builder(
           typeCondition = "B",
           possibleTypes = (listOf("ABC", "SomeBC"))

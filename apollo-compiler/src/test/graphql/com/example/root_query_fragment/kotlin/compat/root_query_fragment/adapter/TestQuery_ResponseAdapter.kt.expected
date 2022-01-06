@@ -17,21 +17,17 @@ import kotlin.collections.List
 
 public object TestQuery_ResponseAdapter {
   public object Data : Adapter<TestQuery.Data> {
-    public val RESPONSE_NAMES: List<String> = listOf("__typename")
+    public val RESPONSE_NAMES: List<String> = listOf()
 
     public override fun fromJson(reader: JsonReader, customScalarAdapters: CustomScalarAdapters):
         TestQuery.Data {
-      var __typename: String? = null
+
 
       while(true) {
         when (reader.selectName(RESPONSE_NAMES)) {
-          0 -> __typename = StringAdapter.fromJson(reader, customScalarAdapters)
+
           else -> break
         }
-      }
-
-      check(__typename != null) {
-        "__typename was not found"
       }
 
       reader.rewind()
@@ -39,7 +35,6 @@ public object TestQuery_ResponseAdapter {
           customScalarAdapters)
 
       return TestQuery.Data(
-        __typename = __typename,
         fragments = fragments
       )
     }
@@ -49,9 +44,6 @@ public object TestQuery_ResponseAdapter {
       customScalarAdapters: CustomScalarAdapters,
       `value`: TestQuery.Data
     ): Unit {
-      writer.name("__typename")
-      StringAdapter.toJson(writer, customScalarAdapters, value.__typename)
-
       com.example.root_query_fragment.adapter.TestQuery_ResponseAdapter.Data.Fragments.toJson(writer,
           customScalarAdapters, value.fragments)
     }
@@ -68,10 +60,6 @@ public object TestQuery_ResponseAdapter {
             0 -> __typename = StringAdapter.fromJson(reader, customScalarAdapters)
             else -> break
           }
-        }
-
-        check(__typename != null) {
-          "__typename was not found"
         }
 
         reader.rewind()

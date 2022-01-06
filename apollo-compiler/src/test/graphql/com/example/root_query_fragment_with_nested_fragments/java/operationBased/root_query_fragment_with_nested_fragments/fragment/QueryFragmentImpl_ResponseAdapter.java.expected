@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class QueryFragmentImpl_ResponseAdapter {
@@ -75,27 +76,25 @@ public class QueryFragmentImpl_ResponseAdapter {
   public enum Hero implements Adapter<com.example.root_query_fragment_with_nested_fragments.fragment.QueryFragment.Hero> {
     INSTANCE;
 
-    private static final List<String> RESPONSE_NAMES = Arrays.asList("__typename");
+    private static final List<String> RESPONSE_NAMES = Collections.emptyList();
 
     @Override
     public com.example.root_query_fragment_with_nested_fragments.fragment.QueryFragment.Hero fromJson(
         JsonReader reader, CustomScalarAdapters customScalarAdapters) throws IOException {
-      String __typename = null;
+
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: __typename = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
+
           default: break loop;
         }
       }
 
-      Assertions.checkFieldNotMissing(__typename, "__typename");
       reader.rewind();
       HeroFragment heroFragment = com.example.root_query_fragment_with_nested_fragments.fragment.HeroFragmentImpl_ResponseAdapter.HeroFragment.INSTANCE.fromJson(reader, customScalarAdapters);
 
       return new com.example.root_query_fragment_with_nested_fragments.fragment.QueryFragment.Hero(
-        __typename,
         heroFragment
       );
     }
@@ -104,9 +103,6 @@ public class QueryFragmentImpl_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         com.example.root_query_fragment_with_nested_fragments.fragment.QueryFragment.Hero value)
         throws IOException {
-      writer.name("__typename");
-      Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.__typename);
-
       com.example.root_query_fragment_with_nested_fragments.fragment.HeroFragmentImpl_ResponseAdapter.HeroFragment.INSTANCE.toJson(writer, customScalarAdapters, value.heroFragment);
     }
   }
@@ -114,27 +110,25 @@ public class QueryFragmentImpl_ResponseAdapter {
   public enum Droid implements Adapter<com.example.root_query_fragment_with_nested_fragments.fragment.QueryFragment.Droid> {
     INSTANCE;
 
-    private static final List<String> RESPONSE_NAMES = Arrays.asList("__typename");
+    private static final List<String> RESPONSE_NAMES = Collections.emptyList();
 
     @Override
     public com.example.root_query_fragment_with_nested_fragments.fragment.QueryFragment.Droid fromJson(
         JsonReader reader, CustomScalarAdapters customScalarAdapters) throws IOException {
-      String __typename = null;
+
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: __typename = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
+
           default: break loop;
         }
       }
 
-      Assertions.checkFieldNotMissing(__typename, "__typename");
       reader.rewind();
       DroidFragment droidFragment = com.example.root_query_fragment_with_nested_fragments.fragment.DroidFragmentImpl_ResponseAdapter.DroidFragment.INSTANCE.fromJson(reader, customScalarAdapters);
 
       return new com.example.root_query_fragment_with_nested_fragments.fragment.QueryFragment.Droid(
-        __typename,
         droidFragment
       );
     }
@@ -143,9 +137,6 @@ public class QueryFragmentImpl_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         com.example.root_query_fragment_with_nested_fragments.fragment.QueryFragment.Droid value)
         throws IOException {
-      writer.name("__typename");
-      Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.__typename);
-
       com.example.root_query_fragment_with_nested_fragments.fragment.DroidFragmentImpl_ResponseAdapter.DroidFragment.INSTANCE.toJson(writer, customScalarAdapters, value.droidFragment);
     }
   }
@@ -153,27 +144,25 @@ public class QueryFragmentImpl_ResponseAdapter {
   public enum Human implements Adapter<com.example.root_query_fragment_with_nested_fragments.fragment.QueryFragment.Human> {
     INSTANCE;
 
-    private static final List<String> RESPONSE_NAMES = Arrays.asList("__typename");
+    private static final List<String> RESPONSE_NAMES = Collections.emptyList();
 
     @Override
     public com.example.root_query_fragment_with_nested_fragments.fragment.QueryFragment.Human fromJson(
         JsonReader reader, CustomScalarAdapters customScalarAdapters) throws IOException {
-      String __typename = null;
+
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: __typename = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
+
           default: break loop;
         }
       }
 
-      Assertions.checkFieldNotMissing(__typename, "__typename");
       reader.rewind();
       com.example.root_query_fragment_with_nested_fragments.fragment.QueryFragment.OnHuman onHuman = com.example.root_query_fragment_with_nested_fragments.fragment.QueryFragmentImpl_ResponseAdapter.OnHuman.INSTANCE.fromJson(reader, customScalarAdapters);
 
       return new com.example.root_query_fragment_with_nested_fragments.fragment.QueryFragment.Human(
-        __typename,
         onHuman
       );
     }
@@ -182,9 +171,6 @@ public class QueryFragmentImpl_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         com.example.root_query_fragment_with_nested_fragments.fragment.QueryFragment.Human value)
         throws IOException {
-      writer.name("__typename");
-      Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.__typename);
-
       com.example.root_query_fragment_with_nested_fragments.fragment.QueryFragmentImpl_ResponseAdapter.OnHuman.INSTANCE.toJson(writer, customScalarAdapters, value.onHuman);
     }
   }

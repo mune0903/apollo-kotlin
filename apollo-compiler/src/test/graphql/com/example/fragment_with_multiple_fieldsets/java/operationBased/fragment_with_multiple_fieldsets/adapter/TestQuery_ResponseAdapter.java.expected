@@ -6,8 +6,6 @@
 package com.example.fragment_with_multiple_fieldsets.adapter;
 
 import com.apollographql.apollo3.api.Adapter;
-import com.apollographql.apollo3.api.Adapters;
-import com.apollographql.apollo3.api.Assertions;
 import com.apollographql.apollo3.api.CustomScalarAdapters;
 import com.apollographql.apollo3.api.NullableAdapter;
 import com.apollographql.apollo3.api.ObjectAdapter;
@@ -19,6 +17,7 @@ import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class TestQuery_ResponseAdapter {
@@ -56,27 +55,25 @@ public class TestQuery_ResponseAdapter {
   public enum I implements Adapter<TestQuery.I> {
     INSTANCE;
 
-    private static final List<String> RESPONSE_NAMES = Arrays.asList("__typename");
+    private static final List<String> RESPONSE_NAMES = Collections.emptyList();
 
     @Override
     public TestQuery.I fromJson(JsonReader reader, CustomScalarAdapters customScalarAdapters) throws
         IOException {
-      String __typename = null;
+
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: __typename = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
+
           default: break loop;
         }
       }
 
-      Assertions.checkFieldNotMissing(__typename, "__typename");
       reader.rewind();
       IFragment iFragment = com.example.fragment_with_multiple_fieldsets.fragment.IFragmentImpl_ResponseAdapter.IFragment.INSTANCE.fromJson(reader, customScalarAdapters);
 
       return new TestQuery.I(
-        __typename,
         iFragment
       );
     }
@@ -84,9 +81,6 @@ public class TestQuery_ResponseAdapter {
     @Override
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         TestQuery.I value) throws IOException {
-      writer.name("__typename");
-      Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.__typename);
-
       com.example.fragment_with_multiple_fieldsets.fragment.IFragmentImpl_ResponseAdapter.IFragment.INSTANCE.toJson(writer, customScalarAdapters, value.iFragment);
     }
   }

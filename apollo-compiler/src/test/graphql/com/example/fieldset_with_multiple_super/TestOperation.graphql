@@ -9,11 +9,5 @@ query TestQuery {
                 fieldB1
             }
         }
-        ... on B {
-            fieldB2
-            ... on A {
-                fieldA2
-            }
-        }
     }
 }

@@ -44,7 +44,6 @@ public class TestQuery() : Query<TestQuery.Data> {
     public val i: I?
   ) : Query.Data {
     public data class I(
-      public val __typename: String,
       /**
        * Synthetic field for 'iFragment'
        */
@@ -54,7 +53,7 @@ public class TestQuery() : Query<TestQuery.Data> {
 
   public companion object {
     public const val OPERATION_ID: String =
-        "784a97bf4fc33e2f184539f66ee6a732e219042070b1b85f7c9e88d92fc2855f"
+        "9ed49443d03b9a59ee1a425da32c1f5b0f2ba77316cc81573faab9960e6d7013"
 
     /**
      * The minimized GraphQL document being sent to the server to save a few bytes.
@@ -62,7 +61,6 @@ public class TestQuery() : Query<TestQuery.Data> {
      *
      * query TestQuery {
      *   i {
-     *     __typename
      *     ...iFragment
      *   }
      * }
@@ -75,7 +73,7 @@ public class TestQuery() : Query<TestQuery.Data> {
      * }
      */
     public const val OPERATION_DOCUMENT: String =
-        "query TestQuery { i { __typename ...iFragment } }  fragment iFragment on I { __typename ... on A { fieldA } }"
+        "query TestQuery { i { ...iFragment } }  fragment iFragment on I { __typename ... on A { fieldA } }"
 
     public const val OPERATION_NAME: String = "TestQuery"
   }

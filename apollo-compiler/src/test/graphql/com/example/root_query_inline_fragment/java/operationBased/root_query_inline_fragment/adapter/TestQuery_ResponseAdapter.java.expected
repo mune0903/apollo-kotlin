@@ -33,27 +33,25 @@ public class TestQuery_ResponseAdapter {
   public enum Data implements Adapter<TestQuery.Data> {
     INSTANCE;
 
-    private static final List<String> RESPONSE_NAMES = Arrays.asList("__typename");
+    private static final List<String> RESPONSE_NAMES = Collections.emptyList();
 
     @Override
     public TestQuery.Data fromJson(JsonReader reader, CustomScalarAdapters customScalarAdapters)
         throws IOException {
-      String __typename = null;
+
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: __typename = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
+
           default: break loop;
         }
       }
 
-      Assertions.checkFieldNotMissing(__typename, "__typename");
       reader.rewind();
       TestQuery.OnQuery onQuery = com.example.root_query_inline_fragment.adapter.TestQuery_ResponseAdapter.OnQuery.INSTANCE.fromJson(reader, customScalarAdapters);
 
       return new TestQuery.Data(
-        __typename,
         onQuery
       );
     }
@@ -61,9 +59,6 @@ public class TestQuery_ResponseAdapter {
     @Override
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         TestQuery.Data value) throws IOException {
-      writer.name("__typename");
-      Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.__typename);
-
       com.example.root_query_inline_fragment.adapter.TestQuery_ResponseAdapter.OnQuery.INSTANCE.toJson(writer, customScalarAdapters, value.onQuery);
     }
   }
@@ -205,27 +200,25 @@ public class TestQuery_ResponseAdapter {
   public enum Droid implements Adapter<TestQuery.Droid> {
     INSTANCE;
 
-    private static final List<String> RESPONSE_NAMES = Arrays.asList("__typename");
+    private static final List<String> RESPONSE_NAMES = Collections.emptyList();
 
     @Override
     public TestQuery.Droid fromJson(JsonReader reader, CustomScalarAdapters customScalarAdapters)
         throws IOException {
-      String __typename = null;
+
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: __typename = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
+
           default: break loop;
         }
       }
 
-      Assertions.checkFieldNotMissing(__typename, "__typename");
       reader.rewind();
       TestQuery.OnDroid onDroid = com.example.root_query_inline_fragment.adapter.TestQuery_ResponseAdapter.OnDroid.INSTANCE.fromJson(reader, customScalarAdapters);
 
       return new TestQuery.Droid(
-        __typename,
         onDroid
       );
     }
@@ -233,9 +226,6 @@ public class TestQuery_ResponseAdapter {
     @Override
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         TestQuery.Droid value) throws IOException {
-      writer.name("__typename");
-      Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.__typename);
-
       com.example.root_query_inline_fragment.adapter.TestQuery_ResponseAdapter.OnDroid.INSTANCE.toJson(writer, customScalarAdapters, value.onDroid);
     }
   }

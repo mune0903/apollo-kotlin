@@ -20,7 +20,7 @@ import java.lang.Override;
 import java.lang.String;
 
 public class TestQuery implements Query<TestQuery.Data> {
-  public static final String OPERATION_ID = "784a97bf4fc33e2f184539f66ee6a732e219042070b1b85f7c9e88d92fc2855f";
+  public static final String OPERATION_ID = "9ed49443d03b9a59ee1a425da32c1f5b0f2ba77316cc81573faab9960e6d7013";
 
   /**
    * The minimized GraphQL document being sent to the server to save a few bytes.
@@ -28,7 +28,6 @@ public class TestQuery implements Query<TestQuery.Data> {
    *
    * query TestQuery {
    *   i {
-   *     __typename
    *     ...iFragment
    *   }
    * }
@@ -40,7 +39,7 @@ public class TestQuery implements Query<TestQuery.Data> {
    *   }
    * }
    */
-  public static final String OPERATION_DOCUMENT = "query TestQuery { i { __typename ...iFragment } }  fragment iFragment on I { __typename ... on A { fieldA } }";
+  public static final String OPERATION_DOCUMENT = "query TestQuery { i { ...iFragment } }  fragment iFragment on I { __typename ... on A { fieldA } }";
 
   public static final String OPERATION_NAME = "TestQuery";
 
@@ -169,8 +168,6 @@ public class TestQuery implements Query<TestQuery.Data> {
   }
 
   public static class I {
-    public String __typename;
-
     /**
      * Synthetic field for 'iFragment'
      */
@@ -182,8 +179,7 @@ public class TestQuery implements Query<TestQuery.Data> {
 
     private transient volatile String $toString;
 
-    public I(String __typename, IFragment iFragment) {
-      this.__typename = __typename;
+    public I(IFragment iFragment) {
       this.iFragment = iFragment;
     }
 
@@ -194,8 +190,7 @@ public class TestQuery implements Query<TestQuery.Data> {
       }
       if (o instanceof I) {
         I that = (I) o;
-        return ((this.__typename == null) ? (that.__typename == null) : this.__typename.equals(that.__typename))
-         &&((this.iFragment == null) ? (that.iFragment == null) : this.iFragment.equals(that.iFragment));
+        return ((this.iFragment == null) ? (that.iFragment == null) : this.iFragment.equals(that.iFragment));
       }
       return false;
     }
@@ -204,8 +199,6 @@ public class TestQuery implements Query<TestQuery.Data> {
     public int hashCode() {
       if (!$hashCodeMemoized) {
         int h = 1;
-        h *= 1000003;
-        h ^= (__typename == null) ? 0 : __typename.hashCode();
         h *= 1000003;
         h ^= (iFragment == null) ? 0 : iFragment.hashCode();
         $hashCode = h;
@@ -218,7 +211,6 @@ public class TestQuery implements Query<TestQuery.Data> {
     public String toString() {
       if ($toString == null) {
         $toString = "I{"
-          + "__typename=" + __typename + ", "
           + "iFragment=" + iFragment
           + "}";
       }

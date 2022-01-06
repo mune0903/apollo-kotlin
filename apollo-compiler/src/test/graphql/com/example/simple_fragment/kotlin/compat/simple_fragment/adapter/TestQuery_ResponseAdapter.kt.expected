@@ -64,16 +64,12 @@ internal object TestQuery_ResponseAdapter {
         }
       }
 
-      check(__typename != null) {
-        "__typename was not found"
-      }
-
       reader.rewind()
       val fragments = com.example.simple_fragment.adapter.TestQuery_ResponseAdapter.Hero.Fragments.fromJson(reader,
           customScalarAdapters)
 
       return TestQuery.Hero(
-        __typename = __typename,
+        __typename = __typename!!,
         fragments = fragments
       )
     }

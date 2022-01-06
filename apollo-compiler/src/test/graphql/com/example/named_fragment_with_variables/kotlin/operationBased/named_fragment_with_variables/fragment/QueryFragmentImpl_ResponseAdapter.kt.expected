@@ -85,22 +85,18 @@ public object QueryFragmentImpl_ResponseAdapter {
       private object User :
           Adapter<com.example.named_fragment_with_variables.fragment.QueryFragment.Organization.User>
           {
-        public val RESPONSE_NAMES: List<String> = listOf("__typename")
+        public val RESPONSE_NAMES: List<String> = listOf()
 
         public override fun fromJson(reader: JsonReader,
             customScalarAdapters: CustomScalarAdapters):
             com.example.named_fragment_with_variables.fragment.QueryFragment.Organization.User {
-          var __typename: String? = null
+
 
           while(true) {
             when (reader.selectName(RESPONSE_NAMES)) {
-              0 -> __typename = StringAdapter.fromJson(reader, customScalarAdapters)
+
               else -> break
             }
-          }
-
-          check(__typename != null) {
-            "__typename was not found"
           }
 
           reader.rewind()
@@ -108,7 +104,6 @@ public object QueryFragmentImpl_ResponseAdapter {
               customScalarAdapters)
 
           return com.example.named_fragment_with_variables.fragment.QueryFragment.Organization.User(
-            __typename = __typename,
             userFragment = userFragment
           )
         }
@@ -118,9 +113,6 @@ public object QueryFragmentImpl_ResponseAdapter {
           customScalarAdapters: CustomScalarAdapters,
           `value`: com.example.named_fragment_with_variables.fragment.QueryFragment.Organization.User
         ): Unit {
-          writer.name("__typename")
-          StringAdapter.toJson(writer, customScalarAdapters, value.__typename)
-
           com.example.named_fragment_with_variables.fragment.UserFragmentImpl_ResponseAdapter.UserFragment.toJson(writer,
               customScalarAdapters, value.userFragment)
         }

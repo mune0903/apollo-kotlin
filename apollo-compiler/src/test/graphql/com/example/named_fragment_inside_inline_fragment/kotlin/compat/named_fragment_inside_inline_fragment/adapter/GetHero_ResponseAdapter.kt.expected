@@ -48,21 +48,17 @@ public object GetHero_ResponseAdapter {
   }
 
   public object Hero : Adapter<GetHero.Hero> {
-    public val RESPONSE_NAMES: List<String> = listOf("__typename")
+    public val RESPONSE_NAMES: List<String> = listOf()
 
     public override fun fromJson(reader: JsonReader, customScalarAdapters: CustomScalarAdapters):
         GetHero.Hero {
-      var __typename: String? = null
+
 
       while(true) {
         when (reader.selectName(RESPONSE_NAMES)) {
-          0 -> __typename = StringAdapter.fromJson(reader, customScalarAdapters)
+
           else -> break
         }
-      }
-
-      check(__typename != null) {
-        "__typename was not found"
       }
 
       reader.rewind()
@@ -70,7 +66,6 @@ public object GetHero_ResponseAdapter {
           customScalarAdapters)
 
       return GetHero.Hero(
-        __typename = __typename,
         fragments = fragments
       )
     }
@@ -80,9 +75,6 @@ public object GetHero_ResponseAdapter {
       customScalarAdapters: CustomScalarAdapters,
       `value`: GetHero.Hero
     ): Unit {
-      writer.name("__typename")
-      StringAdapter.toJson(writer, customScalarAdapters, value.__typename)
-
       com.example.named_fragment_inside_inline_fragment.adapter.GetHero_ResponseAdapter.Hero.Fragments.toJson(writer,
           customScalarAdapters, value.fragments)
     }
@@ -99,10 +91,6 @@ public object GetHero_ResponseAdapter {
             0 -> __typename = StringAdapter.fromJson(reader, customScalarAdapters)
             else -> break
           }
-        }
-
-        check(__typename != null) {
-          "__typename was not found"
         }
 
         reader.rewind()

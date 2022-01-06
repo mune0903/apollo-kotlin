@@ -7,15 +7,11 @@ package com.example.deprecated_merged_field.adapter
 
 import com.apollographql.apollo3.api.Adapter
 import com.apollographql.apollo3.api.CustomScalarAdapters
-import com.apollographql.apollo3.api.StringAdapter
-import com.apollographql.apollo3.api.evaluate
 import com.apollographql.apollo3.api.json.JsonReader
 import com.apollographql.apollo3.api.json.JsonWriter
 import com.apollographql.apollo3.api.nullable
 import com.apollographql.apollo3.api.obj
-import com.apollographql.apollo3.api.possibleTypes
 import com.example.deprecated_merged_field.CatQuery
-import com.example.deprecated_merged_field.fragment.AnimalFragment
 import kotlin.String
 import kotlin.Unit
 import kotlin.collections.List
@@ -50,32 +46,24 @@ public object CatQuery_ResponseAdapter {
     }
 
     private object Cat : Adapter<CatQuery.Data.Cat> {
-      public val RESPONSE_NAMES: List<String> = listOf("__typename")
+      public val RESPONSE_NAMES: List<String> = listOf()
 
       public override fun fromJson(reader: JsonReader, customScalarAdapters: CustomScalarAdapters):
           CatQuery.Data.Cat {
-        var __typename: String? = null
+
 
         while(true) {
           when (reader.selectName(RESPONSE_NAMES)) {
-            0 -> __typename = StringAdapter.fromJson(reader, customScalarAdapters)
+
             else -> break
           }
         }
 
-        check(__typename != null) {
-          "__typename was not found"
-        }
-
         reader.rewind()
-        var animalFragment: AnimalFragment? = null
-        if (possibleTypes("Cat","Dog").evaluate(emptySet(), __typename)) {
-          animalFragment = com.example.deprecated_merged_field.fragment.AnimalFragmentImpl_ResponseAdapter.AnimalFragment.fromJson(reader,
-              customScalarAdapters)
-        }
+        val animalFragment = com.example.deprecated_merged_field.fragment.AnimalFragmentImpl_ResponseAdapter.AnimalFragment.fromJson(reader,
+            customScalarAdapters)
 
         return CatQuery.Data.Cat(
-          __typename = __typename,
           animalFragment = animalFragment
         )
       }
@@ -85,13 +73,8 @@ public object CatQuery_ResponseAdapter {
         customScalarAdapters: CustomScalarAdapters,
         `value`: CatQuery.Data.Cat
       ): Unit {
-        writer.name("__typename")
-        StringAdapter.toJson(writer, customScalarAdapters, value.__typename)
-
-        if (value.animalFragment != null) {
-          com.example.deprecated_merged_field.fragment.AnimalFragmentImpl_ResponseAdapter.AnimalFragment.toJson(writer,
-              customScalarAdapters, value.animalFragment)
-        }
+        com.example.deprecated_merged_field.fragment.AnimalFragmentImpl_ResponseAdapter.AnimalFragment.toJson(writer,
+            customScalarAdapters, value.animalFragment)
       }
     }
   }

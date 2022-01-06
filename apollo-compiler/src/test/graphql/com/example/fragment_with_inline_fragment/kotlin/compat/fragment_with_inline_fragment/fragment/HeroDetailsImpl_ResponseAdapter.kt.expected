@@ -248,16 +248,12 @@ public object HeroDetailsImpl_ResponseAdapter {
         }
       }
 
-      check(__typename != null) {
-        "__typename was not found"
-      }
-
       reader.rewind()
       val fragments = com.example.fragment_with_inline_fragment.fragment.HeroDetailsImpl_ResponseAdapter.AsDroid.Fragments.fromJson(reader,
           customScalarAdapters)
 
       return com.example.fragment_with_inline_fragment.fragment.HeroDetails.AsDroid(
-        __typename = __typename,
+        __typename = __typename!!,
         name = name!!,
         friendsConnection = friendsConnection!!,
         fragments = fragments
@@ -295,10 +291,6 @@ public object HeroDetailsImpl_ResponseAdapter {
             0 -> __typename = StringAdapter.fromJson(reader, customScalarAdapters)
             else -> break
           }
-        }
-
-        check(__typename != null) {
-          "__typename was not found"
         }
 
         reader.rewind()

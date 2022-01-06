@@ -37,29 +37,6 @@ public object TestQuerySelections {
         .build()
       )
 
-  private val onA1: List<CompiledSelection> = listOf(
-        CompiledField.Builder(
-          name = "fieldA2",
-          type = CompiledStringType
-        ).build()
-      )
-
-  private val onB1: List<CompiledSelection> = listOf(
-        CompiledField.Builder(
-          name = "__typename",
-          type = CompiledStringType.notNull()
-        ).build(),
-        CompiledField.Builder(
-          name = "fieldB2",
-          type = CompiledStringType
-        ).build(),
-        CompiledFragment.Builder(
-          typeCondition = "A",
-          possibleTypes = listOf("ABC", "AC")
-        ).selections(onA1)
-        .build()
-      )
-
   private val c: List<CompiledSelection> = listOf(
         CompiledField.Builder(
           name = "__typename",
@@ -69,11 +46,6 @@ public object TestQuerySelections {
           typeCondition = "A",
           possibleTypes = listOf("ABC", "AC")
         ).selections(onA)
-        .build(),
-        CompiledFragment.Builder(
-          typeCondition = "B",
-          possibleTypes = listOf("ABC", "BC")
-        ).selections(onB1)
         .build()
       )
 

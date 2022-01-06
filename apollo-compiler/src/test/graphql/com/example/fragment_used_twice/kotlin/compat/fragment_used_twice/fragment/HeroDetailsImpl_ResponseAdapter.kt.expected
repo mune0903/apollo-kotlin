@@ -31,16 +31,12 @@ public object HeroDetailsImpl_ResponseAdapter {
         }
       }
 
-      check(__typename != null) {
-        "__typename was not found"
-      }
-
       reader.rewind()
       val fragments = com.example.fragment_used_twice.fragment.HeroDetailsImpl_ResponseAdapter.HeroDetails.Fragments.fromJson(reader,
           customScalarAdapters)
 
       return com.example.fragment_used_twice.fragment.HeroDetails(
-        __typename = __typename,
+        __typename = __typename!!,
         name = name!!,
         fragments = fragments
       )
@@ -74,10 +70,6 @@ public object HeroDetailsImpl_ResponseAdapter {
             0 -> __typename = StringAdapter.fromJson(reader, customScalarAdapters)
             else -> break
           }
-        }
-
-        check(__typename != null) {
-          "__typename was not found"
         }
 
         reader.rewind()

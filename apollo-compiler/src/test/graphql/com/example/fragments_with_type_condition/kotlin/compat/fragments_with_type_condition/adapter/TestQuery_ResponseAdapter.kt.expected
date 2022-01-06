@@ -71,16 +71,12 @@ public object TestQuery_ResponseAdapter {
         }
       }
 
-      check(__typename != null) {
-        "__typename was not found"
-      }
-
       reader.rewind()
       val fragments = com.example.fragments_with_type_condition.adapter.TestQuery_ResponseAdapter.R2.Fragments.fromJson(reader,
           customScalarAdapters)
 
       return TestQuery.R2(
-        __typename = __typename,
+        __typename = __typename!!,
         fragments = fragments
       )
     }
@@ -167,16 +163,12 @@ public object TestQuery_ResponseAdapter {
         }
       }
 
-      check(__typename != null) {
-        "__typename was not found"
-      }
-
       reader.rewind()
       val fragments = com.example.fragments_with_type_condition.adapter.TestQuery_ResponseAdapter.Luke.Fragments.fromJson(reader,
           customScalarAdapters)
 
       return TestQuery.Luke(
-        __typename = __typename,
+        __typename = __typename!!,
         fragments = fragments
       )
     }

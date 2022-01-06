@@ -19,7 +19,7 @@ import java.lang.Override;
 import java.lang.String;
 
 public class TestQuery implements Query<TestQuery.Data> {
-  public static final String OPERATION_ID = "6faa0db26a1466e969ffc48d42fef45419406628c6c607fbbb1a0da1d592fdb2";
+  public static final String OPERATION_ID = "fcf97ed0a84cba61041468e099af495a8b9e37187f8fd35b9ddfd486c375fb0b";
 
   /**
    * The minimized GraphQL document being sent to the server to save a few bytes.
@@ -35,17 +35,10 @@ public class TestQuery implements Query<TestQuery.Data> {
    *         fieldB1
    *       }
    *     }
-   *     ... on B {
-   *       __typename
-   *       fieldB2
-   *       ... on A {
-   *         fieldA2
-   *       }
-   *     }
    *   }
    * }
    */
-  public static final String OPERATION_DOCUMENT = "query TestQuery { c { __typename ... on A { __typename fieldA1 ... on B { fieldB1 } } ... on B { __typename fieldB2 ... on A { fieldA2 } } } }";
+  public static final String OPERATION_DOCUMENT = "query TestQuery { c { __typename ... on A { __typename fieldA1 ... on B { fieldB1 } } } }";
 
   public static final String OPERATION_NAME = "TestQuery";
 
@@ -181,21 +174,15 @@ public class TestQuery implements Query<TestQuery.Data> {
      */
     public OnA onA;
 
-    /**
-     * Synthetic field for inline fragment on B
-     */
-    public OnB1 onB;
-
     private transient volatile int $hashCode;
 
     private transient volatile boolean $hashCodeMemoized;
 
     private transient volatile String $toString;
 
-    public C(String __typename, OnA onA, OnB1 onB) {
+    public C(String __typename, OnA onA) {
       this.__typename = __typename;
       this.onA = onA;
-      this.onB = onB;
     }
 
     @Override
@@ -206,8 +193,7 @@ public class TestQuery implements Query<TestQuery.Data> {
       if (o instanceof C) {
         C that = (C) o;
         return ((this.__typename == null) ? (that.__typename == null) : this.__typename.equals(that.__typename))
-         &&((this.onA == null) ? (that.onA == null) : this.onA.equals(that.onA))
-         &&((this.onB == null) ? (that.onB == null) : this.onB.equals(that.onB));
+         &&((this.onA == null) ? (that.onA == null) : this.onA.equals(that.onA));
       }
       return false;
     }
@@ -220,8 +206,6 @@ public class TestQuery implements Query<TestQuery.Data> {
         h ^= (__typename == null) ? 0 : __typename.hashCode();
         h *= 1000003;
         h ^= (onA == null) ? 0 : onA.hashCode();
-        h *= 1000003;
-        h ^= (onB == null) ? 0 : onB.hashCode();
         $hashCode = h;
         $hashCodeMemoized = true;
       }
@@ -233,8 +217,7 @@ public class TestQuery implements Query<TestQuery.Data> {
       if ($toString == null) {
         $toString = "C{"
           + "__typename=" + __typename + ", "
-          + "onA=" + onA + ", "
-          + "onB=" + onB
+          + "onA=" + onA
           + "}";
       }
       return $toString;
@@ -348,119 +331,6 @@ public class TestQuery implements Query<TestQuery.Data> {
       if ($toString == null) {
         $toString = "OnB{"
           + "fieldB1=" + fieldB1
-          + "}";
-      }
-      return $toString;
-    }
-  }
-
-  public static class OnB1 {
-    public String __typename;
-
-    public String fieldB2;
-
-    /**
-     * Synthetic field for inline fragment on A
-     */
-    public OnA1 onA;
-
-    private transient volatile int $hashCode;
-
-    private transient volatile boolean $hashCodeMemoized;
-
-    private transient volatile String $toString;
-
-    public OnB1(String __typename, String fieldB2, OnA1 onA) {
-      this.__typename = __typename;
-      this.fieldB2 = fieldB2;
-      this.onA = onA;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (o == this) {
-        return true;
-      }
-      if (o instanceof OnB1) {
-        OnB1 that = (OnB1) o;
-        return ((this.__typename == null) ? (that.__typename == null) : this.__typename.equals(that.__typename))
-         &&((this.fieldB2 == null) ? (that.fieldB2 == null) : this.fieldB2.equals(that.fieldB2))
-         &&((this.onA == null) ? (that.onA == null) : this.onA.equals(that.onA));
-      }
-      return false;
-    }
-
-    @Override
-    public int hashCode() {
-      if (!$hashCodeMemoized) {
-        int h = 1;
-        h *= 1000003;
-        h ^= (__typename == null) ? 0 : __typename.hashCode();
-        h *= 1000003;
-        h ^= (fieldB2 == null) ? 0 : fieldB2.hashCode();
-        h *= 1000003;
-        h ^= (onA == null) ? 0 : onA.hashCode();
-        $hashCode = h;
-        $hashCodeMemoized = true;
-      }
-      return $hashCode;
-    }
-
-    @Override
-    public String toString() {
-      if ($toString == null) {
-        $toString = "OnB1{"
-          + "__typename=" + __typename + ", "
-          + "fieldB2=" + fieldB2 + ", "
-          + "onA=" + onA
-          + "}";
-      }
-      return $toString;
-    }
-  }
-
-  public static class OnA1 {
-    public String fieldA2;
-
-    private transient volatile int $hashCode;
-
-    private transient volatile boolean $hashCodeMemoized;
-
-    private transient volatile String $toString;
-
-    public OnA1(String fieldA2) {
-      this.fieldA2 = fieldA2;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (o == this) {
-        return true;
-      }
-      if (o instanceof OnA1) {
-        OnA1 that = (OnA1) o;
-        return ((this.fieldA2 == null) ? (that.fieldA2 == null) : this.fieldA2.equals(that.fieldA2));
-      }
-      return false;
-    }
-
-    @Override
-    public int hashCode() {
-      if (!$hashCodeMemoized) {
-        int h = 1;
-        h *= 1000003;
-        h ^= (fieldA2 == null) ? 0 : fieldA2.hashCode();
-        $hashCode = h;
-        $hashCodeMemoized = true;
-      }
-      return $hashCode;
-    }
-
-    @Override
-    public String toString() {
-      if ($toString == null) {
-        $toString = "OnA1{"
-          + "fieldA2=" + fieldA2
           + "}";
       }
       return $toString;
