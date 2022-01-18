@@ -72,14 +72,16 @@ class KotlinResolver(entries: List<ResolverEntry>, val next: KotlinResolver?, pr
 
   private fun resolveIrScalarType(type: IrScalarType): ClassName {
     // Try mapping first, then built-ins, then fallback to Any
-    return resolve(ResolverKeyKind.ScalarTarget, type.name) ?: when (type.name) {
-      "String" -> KotlinSymbols.String
-      "Float" -> KotlinSymbols.Double
-      "Int" -> KotlinSymbols.Int
-      "Boolean" -> KotlinSymbols.Boolean
-      "ID" -> KotlinSymbols.String
-      else -> KotlinSymbols.Any
-    }
+    return resolve(ResolverKeyKind.ScalarTarget, type.name)
+        ?: scalarMapping[type.name]?.let { ClassName.bestGuess(it.targetName) }
+        ?: when (type.name) {
+          "String" -> KotlinSymbols.String
+          "Float" -> KotlinSymbols.Double
+          "Int" -> KotlinSymbols.Int
+          "Boolean" -> KotlinSymbols.Boolean
+          "ID" -> KotlinSymbols.String
+          else -> KotlinSymbols.Any
+        }
   }
 
   fun adapterInitializer(type: IrType, requiresBuffering: Boolean): CodeBlock {
@@ -92,7 +94,7 @@ class KotlinResolver(entries: List<ResolverEntry>, val next: KotlinResolver?, pr
         type is IrScalarType && type.name == "String" && scalarWithoutCustomMapping -> CodeBlock.of("%M", KotlinSymbols.NullableStringAdapter)
         type is IrScalarType && type.name == "Int" && scalarWithoutCustomMapping -> CodeBlock.of("%M", KotlinSymbols.NullableIntAdapter)
         type is IrScalarType && type.name == "Float" && scalarWithoutCustomMapping -> CodeBlock.of("%M", KotlinSymbols.NullableDoubleAdapter)
-        type is IrScalarType && resolve(ResolverKeyKind.ScalarTarget, type.name) == null -> {
+        type is IrScalarType && resolve(ResolverKeyKind.ScalarTarget, type.name) == null && scalarWithoutCustomMapping -> {
           CodeBlock.of("%M", KotlinSymbols.NullableAnyAdapter)
         }
         else -> {
@@ -105,24 +107,19 @@ class KotlinResolver(entries: List<ResolverEntry>, val next: KotlinResolver?, pr
   }
 
   fun resolveCompiledType(name: String): CodeBlock {
-    val builtin = if (scalarMapping.containsKey(name)) {
-      // The scalar is mapped to a user-defined type: do not hardcode the compiled type
-      null
-    } else {
-      when (name) {
-        "String" -> MemberName("com.apollographql.apollo3.api", "CompiledStringType")
-        "Int" -> MemberName("com.apollographql.apollo3.api", "CompiledIntType")
-        "Float" -> MemberName("com.apollographql.apollo3.api", "CompiledFloatType")
-        "Boolean" -> MemberName("com.apollographql.apollo3.api", "CompiledBooleanType")
-        "ID" -> MemberName("com.apollographql.apollo3.api", "CompiledIDType")
-        "__Schema" -> MemberName("com.apollographql.apollo3.api", "CompiledSchemaType")
-        "__Type" -> MemberName("com.apollographql.apollo3.api", "CompiledTypeType")
-        "__Field" -> MemberName("com.apollographql.apollo3.api", "CompiledFieldType")
-        "__InputValue" -> MemberName("com.apollographql.apollo3.api", "CompiledInputValueType")
-        "__EnumValue" -> MemberName("com.apollographql.apollo3.api", "CompiledEnumValueType")
-        "__Directive" -> MemberName("com.apollographql.apollo3.api", "CompiledDirectiveType")
-        else -> null
-      }
+    val builtin = when (name) {
+      "String" -> MemberName("com.apollographql.apollo3.api", "CompiledStringType")
+      "Int" -> MemberName("com.apollographql.apollo3.api", "CompiledIntType")
+      "Float" -> MemberName("com.apollographql.apollo3.api", "CompiledFloatType")
+      "Boolean" -> MemberName("com.apollographql.apollo3.api", "CompiledBooleanType")
+      "ID" -> MemberName("com.apollographql.apollo3.api", "CompiledIDType")
+      "__Schema" -> MemberName("com.apollographql.apollo3.api", "CompiledSchemaType")
+      "__Type" -> MemberName("com.apollographql.apollo3.api", "CompiledTypeType")
+      "__Field" -> MemberName("com.apollographql.apollo3.api", "CompiledFieldType")
+      "__InputValue" -> MemberName("com.apollographql.apollo3.api", "CompiledInputValueType")
+      "__EnumValue" -> MemberName("com.apollographql.apollo3.api", "CompiledEnumValueType")
+      "__Directive" -> MemberName("com.apollographql.apollo3.api", "CompiledDirectiveType")
+      else -> null
     }
 
     if (builtin != null) {
@@ -165,7 +162,7 @@ class KotlinResolver(entries: List<ResolverEntry>, val next: KotlinResolver?, pr
         CodeBlock.of(adapterInitializer.expression)
       }
       is RuntimeAdapterInitializer -> {
-        val target = resolve(ResolverKeyKind.ScalarTarget, type.name)
+        val target = resolveIrScalarType(type)
         CodeBlock.of(
             "$customScalarAdapters.responseAdapterFor<%T>(%L)",
             target,

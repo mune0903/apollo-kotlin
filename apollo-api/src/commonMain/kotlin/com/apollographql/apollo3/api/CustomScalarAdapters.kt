@@ -16,6 +16,17 @@ private constructor(
 
   private val adaptersMap: Map<String, Adapter<*>> = customScalarAdapters
 
+  fun <T : Any> responseAdapterFor(scalar: ScalarType): Adapter<T> {
+    @Suppress("UNCHECKED_CAST")
+    return (
+        if (adaptersMap[scalar.name] != null) {
+          adaptersMap[scalar.name]
+        } else {
+          error("Can't map GraphQL type: `${scalar.name}`. Did you forget to add a CustomScalarAdapter?")
+        }
+        ) as Adapter<T>
+  }
+
   fun <T : Any> responseAdapterFor(customScalar: CustomScalarType): Adapter<T> {
     @Suppress("UNCHECKED_CAST")
     return when {
@@ -34,7 +45,7 @@ private constructor(
       customScalar.className in listOf("kotlin.Boolean", "java.lang.Boolean") -> {
         BooleanAdapter
       }
-      customScalar.className in listOf("kotlin.Int", "java.lang.Int")  -> {
+      customScalar.className in listOf("kotlin.Int", "java.lang.Int") -> {
         IntAdapter
       }
       customScalar.className in listOf("kotlin.Double", "java.lang.Double") -> {
@@ -43,10 +54,10 @@ private constructor(
       customScalar.className in listOf("kotlin.Long", "java.lang.Long") -> {
         LongAdapter
       }
-      customScalar.className in listOf("kotlin.Float", "java.lang.Float")  -> {
+      customScalar.className in listOf("kotlin.Float", "java.lang.Float") -> {
         FloatAdapter
       }
-      customScalar.className in listOf("kotlin.Any", "java.lang.Object")  -> {
+      customScalar.className in listOf("kotlin.Any", "java.lang.Object") -> {
         AnyAdapter
       }
       else -> error("Can't map GraphQL type: `${customScalar.name}` to: `${customScalar.className}`. Did you forget to add a CustomScalarAdapter?")
@@ -75,6 +86,14 @@ private constructor(
     ) = apply {
       adaptersMap[customScalarType.name] = customScalarAdapter
     }
+
+    fun <T> add(
+        scalarType: ScalarType,
+        scalarAdapter: Adapter<T>,
+    ) = apply {
+      adaptersMap[scalarType.name] = scalarAdapter
+    }
+
 
     @Suppress("DEPRECATION")
     @OptIn(ApolloInternal::class)

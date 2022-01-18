@@ -1,8 +1,10 @@
 package test
 
 import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo3.api.CompiledIDType
 import com.apollographql.apollo3.api.CustomTypeAdapter
 import com.apollographql.apollo3.api.CustomTypeValue
+import com.apollographql.apollo3.api.LongAdapter
 import com.apollographql.apollo3.mockserver.MockServer
 import com.apollographql.apollo3.mockserver.enqueue
 import com.apollographql.apollo3.testing.runTest
@@ -41,7 +43,10 @@ class CustomScalarTest {
       }
     """.trimIndent())
 
-    val data = ApolloClient.Builder().serverUrl(serverUrl = server.url()).build()
+    val data = ApolloClient.Builder()
+        .serverUrl(serverUrl = server.url())
+        .addScalarAdapter(CompiledIDType, LongAdapter)
+        .build()
         .query(GetAllQuery())
         .execute()
         .dataAssertNoErrors

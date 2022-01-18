@@ -14,6 +14,7 @@ import com.apollographql.apollo3.api.MutableExecutionOptions
 import com.apollographql.apollo3.api.Mutation
 import com.apollographql.apollo3.api.Operation
 import com.apollographql.apollo3.api.Query
+import com.apollographql.apollo3.api.ScalarType
 import com.apollographql.apollo3.api.Subscription
 import com.apollographql.apollo3.api.http.HttpHeader
 import com.apollographql.apollo3.api.http.HttpMethod
@@ -345,6 +346,10 @@ private constructor(
      */
     fun <T> addCustomScalarAdapter(customScalarType: CustomScalarType, customScalarAdapter: Adapter<T>) = apply {
       customScalarAdaptersBuilder.add(customScalarType, customScalarAdapter)
+    }
+
+    fun <T> addScalarAdapter(scalarType: ScalarType, customScalarAdapter: Adapter<T>) = apply {
+      customScalarAdaptersBuilder.add(scalarType, customScalarAdapter)
     }
 
     @OptIn(ApolloInternal::class)

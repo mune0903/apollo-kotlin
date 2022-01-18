@@ -133,8 +133,7 @@ internal class IrBuilder(
       visitedTypes.add(name)
       val typeDefinition = schema.typeDefinition(name)
       if (typeDefinition.isBuiltIn()) {
-        // We don't generate builtin types, unless they are explicitly mapped
-        if (!scalarMapping.containsKey(name)) continue
+        continue
       }
 
       when (typeDefinition) {

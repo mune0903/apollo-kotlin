@@ -7,6 +7,7 @@ package com.example.custom_scalar_type.adapter
 
 import com.apollographql.apollo3.api.Adapter
 import com.apollographql.apollo3.api.AnyAdapter
+import com.apollographql.apollo3.api.CompiledIDType
 import com.apollographql.apollo3.api.CustomScalarAdapters
 import com.apollographql.apollo3.api.json.JsonReader
 import com.apollographql.apollo3.api.json.JsonWriter
@@ -14,13 +15,8 @@ import com.apollographql.apollo3.api.list
 import com.apollographql.apollo3.api.nullable
 import com.apollographql.apollo3.api.obj
 import com.example.custom_scalar_type.TestQuery
-import com.example.custom_scalar_type.type.ID
 import java.lang.Long
 import java.util.Date
-import kotlin.Any
-import kotlin.String
-import kotlin.Unit
-import kotlin.collections.List
 
 public object TestQuery_ResponseAdapter {
   public object Data : Adapter<TestQuery.Data> {
@@ -67,7 +63,7 @@ public object TestQuery_ResponseAdapter {
 
         while(true) {
           when (reader.selectName(RESPONSE_NAMES)) {
-            0 -> id = customScalarAdapters.responseAdapterFor<Long>(ID.type).fromJson(reader,
+            0 -> id = customScalarAdapters.responseAdapterFor<Long>(CompiledIDType).fromJson(reader,
                 customScalarAdapters)
             1 -> name = com.example.MyStringAdapter().fromJson(reader, customScalarAdapters)
             2 -> birthDate = customScalarAdapters.responseAdapterFor<Date>(com.example.custom_scalar_type.type.Date.type).fromJson(reader,
@@ -98,8 +94,8 @@ public object TestQuery_ResponseAdapter {
         `value`: TestQuery.Data.Hero
       ): Unit {
         writer.name("id")
-        customScalarAdapters.responseAdapterFor<Long>(ID.type).toJson(writer, customScalarAdapters,
-            value.id)
+        customScalarAdapters.responseAdapterFor<Long>(CompiledIDType).toJson(writer,
+            customScalarAdapters, value.id)
 
         writer.name("name")
         com.example.MyStringAdapter().toJson(writer, customScalarAdapters, value.name)
